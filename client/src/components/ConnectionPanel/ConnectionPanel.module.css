@@ -1,0 +1,204 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.header {
+  padding: 16px 16px 12px;
+  border-bottom: 1px solid #1e2235;
+  flex-shrink: 0;
+}
+
+.appTitle {
+  font-size: 14px;
+  font-weight: 700;
+  color: #e2e8f0;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.appTitle::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #4f9cf9;
+}
+
+.appSubtitle {
+  font-size: 11px;
+  color: #4a5568;
+  margin-top: 2px;
+  letter-spacing: 0.3px;
+}
+
+.body {
+  padding: 16px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dropzone {
+  border: 1.5px dashed #2a2d3e;
+  border-radius: 8px;
+  padding: 28px 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  background: transparent;
+  outline: none;
+}
+
+.dropzone:hover,
+.dropzoneDragOver {
+  border-color: #4f9cf9;
+  background: rgba(79, 156, 249, 0.05);
+}
+
+.dropzoneIcon {
+  font-size: 24px;
+  margin-bottom: 8px;
+  color: #4a5568;
+}
+
+.dropzoneText {
+  font-size: 12px;
+  color: #718096;
+  line-height: 1.6;
+}
+
+.dropzoneHint {
+  font-size: 11px;
+  color: #4a5568;
+  margin-top: 6px;
+}
+
+.hiddenInput {
+  display: none;
+}
+
+.connectBtn {
+  width: 100%;
+  padding: 9px 16px;
+  border-radius: 6px;
+  background: #4f9cf9;
+  color: #0f1117;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  transition: background 0.15s, opacity 0.15s;
+}
+
+.connectBtn:hover:not(:disabled) {
+  background: #6aadff;
+}
+
+.connectBtn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.selectedFile {
+  font-size: 11px;
+  color: #94a3b8;
+  background: #1a1d27;
+  border-radius: 5px;
+  padding: 7px 10px;
+  word-break: break-all;
+}
+
+.error {
+  font-size: 11px;
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 5px;
+  padding: 8px 10px;
+  line-height: 1.5;
+}
+
+.connectedStatus {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  background: rgba(34, 197, 94, 0.08);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  border-radius: 6px;
+}
+
+.statusDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #22c55e;
+  flex-shrink: 0;
+  box-shadow: 0 0 6px rgba(34, 197, 94, 0.5);
+}
+
+.statusText {
+  font-size: 12px;
+  color: #a0aec0;
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.clusterName {
+  font-size: 12px;
+  font-weight: 600;
+  color: #e2e8f0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.disconnectBtn {
+  width: 100%;
+  padding: 7px 16px;
+  border-radius: 6px;
+  background: transparent;
+  border: 1px solid #2a2d3e;
+  color: #94a3b8;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.disconnectBtn:hover {
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
+.statsRow {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.statItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 0;
+  border-bottom: 1px solid #1e2235;
+  font-size: 11px;
+}
+
+.statLabel {
+  color: #4a5568;
+}
+
+.statValue {
+  color: #94a3b8;
+  font-weight: 600;
+}

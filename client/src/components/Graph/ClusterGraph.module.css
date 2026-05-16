@@ -1,0 +1,42 @@
+.wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+.wrapper :global(.react-flow__node) {
+  cursor: pointer;
+}
+
+.wrapper :global(.react-flow__controls) {
+  background: #1a1d27;
+  border: 1px solid #2a2d3e;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: none;
+}
+
+.wrapper :global(.react-flow__controls-button) {
+  background: #1a1d27;
+  border-color: #2a2d3e;
+  color: #718096;
+  fill: #718096;
+  width: 26px;
+  height: 26px;
+}
+
+.wrapper :global(.react-flow__controls-button:hover) {
+  background: #232638;
+  color: #e2e8f0;
+  fill: #e2e8f0;
+}
+
+.wrapper :global(.react-flow__minimap) {
+  border: 1px solid #2a2d3e;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.wrapper :global(.react-flow__edge-path) {
+  stroke: #2a2d3e;
+  stroke-width: 1.5;
+}

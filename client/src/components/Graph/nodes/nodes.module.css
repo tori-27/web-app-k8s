@@ -1,0 +1,134 @@
+.k8sNode {
+  background: #1a1d27;
+  border: 1.5px solid #2a2d3e;
+  border-radius: 8px;
+  padding: 12px 14px;
+  width: 340px;
+  min-height: 100px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.k8sNode:hover {
+  border-color: #3a4060;
+}
+
+.pod {
+  background: #1a1d27;
+  border: 1.5px solid #2a2d3e;
+  border-radius: 6px;
+  padding: 8px 10px;
+  width: 160px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.pod:hover {
+  border-color: #3a4060;
+}
+
+.service {
+  background: #1a1d27;
+  border: 1.5px solid #1e3a5f;
+  border-radius: 6px;
+  padding: 10px 12px;
+  width: 200px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.service:hover {
+  border-color: #4f9cf9;
+}
+
+.nodeHeader {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.statusDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.typeTag {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  color: #4a5568;
+  text-transform: uppercase;
+  background: #0f1117;
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+
+.name {
+  font-size: 12px;
+  font-weight: 700;
+  color: #e2e8f0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 3px;
+}
+
+.status {
+  font-size: 11px;
+  color: #718096;
+}
+
+.namespace {
+  font-size: 10px;
+  color: #4a5568;
+  margin-top: 2px;
+}
+
+.meta {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #1e2235;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.metaRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 10px;
+}
+
+.metaLabel {
+  color: #4a5568;
+}
+
+.metaValue {
+  color: #718096;
+  max-width: 180px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.handle {
+  opacity: 0 !important;
+  pointer-events: none;
+}
+
+.serviceAccent {
+  width: 3px;
+  position: absolute;
+  left: 0;
+  top: 8px;
+  bottom: 8px;
+  background: #4f9cf9;
+  border-radius: 2px;
+}
