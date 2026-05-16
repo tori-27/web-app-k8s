@@ -1,0 +1,12 @@
+services:
+  app:
+    environment:
+      - RUNNING_IN_DOCKER=value
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    image: dmytro100/k8s-visualizer:latest
+    ports:
+      - "3001:3001"
+    volumes:
+      - ${HOME}/.kube:/root/.kube:ro
+      - ${HOME}/.minikube:${HOME}/.minikube:ro

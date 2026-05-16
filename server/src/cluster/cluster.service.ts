@@ -15,8 +15,16 @@ export class ClusterService extends EventEmitter {
       this.disconnect();
     }
 
+    const content = process.env.RUNNING_IN_DOCKER
+      ? kubeconfigContent.replace(
+          /https:\/\/127\.0\.0\.1/g,
+          "https://host.docker.internal",
+        )
+      : kubeconfigContent;
+
     this.kc = new k8s.KubeConfig();
-    this.kc.loadFromString(kubeconfigContent);
+    this.kc.loadFromString(content);
+    this._applyDockerPatches();
 
     this._finishConnection();
   }
@@ -28,6 +36,7 @@ export class ClusterService extends EventEmitter {
 
     this.kc = new k8s.KubeConfig();
     this.kc.loadFromDefault();
+    this._applyDockerPatches();
 
     const cluster = this.kc.getCurrentCluster();
     if (!cluster?.server) {
@@ -35,6 +44,29 @@ export class ClusterService extends EventEmitter {
     }
 
     this._finishConnection();
+  }
+
+  // Minikube certs have 127.0.0.1 in their SANs, not host.docker.internal.
+  // Rewrite server URLs and skip TLS so watches reach the host API server.
+  // NODE_TLS_REJECT_UNAUTHORIZED is also needed because @kubernetes/client-node
+  // REST clients use node-fetch, which ignores skipTLSVerify from KubeConfig.
+  private _applyDockerPatches(): void {
+    if (!process.env.RUNNING_IN_DOCKER || !this.kc) return;
+
+    this.kc.clusters = this.kc.clusters.map((cluster) =>
+      cluster.server.includes("127.0.0.1")
+        ? {
+            ...cluster,
+            server: cluster.server.replace(
+              "https://127.0.0.1",
+              "https://host.docker.internal",
+            ),
+            skipTLSVerify: true,
+          }
+        : cluster,
+    );
+
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
   }
 
   connectFromCluster(): void {

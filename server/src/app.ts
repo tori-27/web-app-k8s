@@ -2,16 +2,28 @@ import Fastify, { type FastifyError } from "fastify";
 import websocket from "@fastify/websocket";
 import cors from "@fastify/cors";
 import multipart from "@fastify/multipart";
+import staticFiles from "@fastify/static";
+import { join } from "path";
+import { fileURLToPath } from "url";
 import { clusterRoutes } from "./cluster/cluster.routes.js";
 import { WsGateway } from "./gateway/ws.gateway.js";
 import { ClusterService } from "./cluster/cluster.service.js";
 
+const __dirname = fileURLToPath(new URL(".", import.meta.url));
+
 const fastify = Fastify({ logger: true });
 
 // --- Plugins ---
-await fastify.register(cors, { origin: "http://localhost:5174" });
+await fastify.register(cors, {
+  origin: ["http://localhost:5174", "http://localhost:3001"],
+});
 await fastify.register(websocket);
 await fastify.register(multipart);
+await fastify.register(staticFiles, {
+  root: join(__dirname, "..", "public"),
+  prefix: "/",
+  decorateReply: false,
+});
 
 // --- Services ---
 const clusterService = new ClusterService();
@@ -29,6 +41,15 @@ fastify.setErrorHandler<FastifyError>((error, request, reply) => {
   });
 });
 
+// SPA fallback — serve index.html for all non-API routes
+fastify.setNotFoundHandler((request, reply) => {
+  if (request.url.startsWith("/api") || request.url.startsWith("/ws")) {
+    reply.code(404).send({ error: "Not found" });
+    return;
+  }
+  reply.sendFile("index.html");
+});
+
 // --- Routes ---
 await fastify.register(clusterRoutes, { prefix: "/api/cluster" });
 
@@ -40,11 +61,16 @@ fastify.get("/ws", { websocket: true }, (socket) => {
 // --- Start ---
 try {
   fastify.clusterService.connectFromCluster();
-  fastify.log.info("Connected to cluster using in-cluster config");
+  fastify.log.info("Connected via in-cluster config");
 } catch {
-  fastify.log.info(
-    "In-cluster config unavailable, falling back to local kubeconfig",
-  );
+  try {
+    fastify.clusterService.connectFromDefault();
+    fastify.log.info("Connected via local kubeconfig");
+  } catch {
+    fastify.log.info(
+      "No cluster config found — waiting for kubeconfig upload via UI",
+    );
+  }
 }
 
 await fastify.listen({ port: 3001, host: "0.0.0.0" });

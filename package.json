@@ -1,0 +1,14 @@
+{
+  "name": "web-app-k8s",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "npm run build --prefix client && npm run build:ts --prefix server",
+    "dev": "concurrently \"npm run dev --prefix server\" \"npm run dev --prefix client\"",
+    "docker:build": "docker build -t dmytro100/k8s-visualizer:latest .",
+    "docker:push": "docker push dmytro100/k8s-visualizer:latest"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.0"
+  }
+}
